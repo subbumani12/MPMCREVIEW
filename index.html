@@ -1,0 +1,53 @@
+<input type="file" id="fileInput">
+<button onclick="uploadFace()">Upload Face</button>
+<p id="uploadResult"></p>
+
+<input type="file" id="recognitionInput">
+<button onclick="recognizeFace()">Recognize Face</button>
+<p id="recognitionResult"></p>
+
+<script>
+    function getBase64(file, callback) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => callback(reader.result);
+    }
+
+    function uploadFace() {
+        const file = document.getElementById("fileInput").files[0];
+        const name = prompt("Enter name:");
+
+        if (!file || !name) return alert("Missing file or name");
+
+        getBase64(file, (base64Image) => {
+            fetch('/upload_face', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, image: base64Image })
+            })
+            .then(res => res.json())
+            .then(data => document.getElementById("uploadResult").innerText = data.message)
+            .catch(err => console.error(err));
+        });
+    }
+
+    function recognizeFace() {
+        const file = document.getElementById("recognitionInput").files[0];
+
+        if (!file) return alert("No file selected");
+
+        getBase64(file, (base64Image) => {
+            fetch('/recognize', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image: base64Image })
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById("recognitionResult").innerText = 
+                    data.results.length ? `Recognized: ${data.results[0].name}` : "No face detected";
+            })
+            .catch(err => console.error(err));
+        });
+    }
+</script>
