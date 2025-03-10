@@ -1,0 +1,5 @@
+streamlit
+opencv-python
+numpy
+flask  # (Remove this if not using Flask)
+
