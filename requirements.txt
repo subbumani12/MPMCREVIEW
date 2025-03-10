@@ -1,5 +1,5 @@
-streamlit
-opencv-python
+Flask
 numpy
-flask  # (Remove this if not using Flask)
-
+opencv-python
+pyotp
+gunicorn

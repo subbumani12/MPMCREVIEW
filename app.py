@@ -11,8 +11,8 @@ app = Flask(__name__)
 # -------------------
 
 # Relative paths for model files (must be in same directory as app.py)
-model_path = os.path.join(os.getcwd(), r"C:\Users\themo\Downloads\facial_recogition-main\facial_recogition-main\face_recognizer.yml")
-label_map_path = os.path.join(os.getcwd(), r"C:\Users\themo\Downloads\facial_recogition-main\facial_recogition-main\label_map.npy")
+model_path = os.path.join(os.getcwd(), "face_recognizer.yml")
+label_map_path = os.path.join(os.getcwd(), "label_map.npy")
 
 
 # Check if files exist
